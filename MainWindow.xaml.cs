@@ -10,6 +10,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Collections.Specialized.BitVector32;
 
+// Daniel Minty
+// Assignment: Lond Underground Communt
+// 01/10/2024
+
 namespace Assignment_London_Underground_Ticketing_System
 {
     /// <summary>
@@ -20,16 +24,15 @@ namespace Assignment_London_Underground_Ticketing_System
         // Replace "WillsList" with your Custom List name in 2 places.
         // 1. Replace here
         // Example YourList<Ride> Riders
-        public WillsList<Rider> Riders;
+        public DanielsList<Rider> Riders;
 
-        int numberOfRiders = 10; // Changes this to something higher than 100 to check your list is working
+        int numberOfRiders = 200; // Changes this to something higher than 100 to check your list is working
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeRiders();
             cmbSearchStation.ItemsSource = Enum.GetValues(typeof(Station));
-
 
             lvRiders.ItemsSource = Riders;
         } // MainWindow
@@ -40,26 +43,31 @@ namespace Assignment_London_Underground_Ticketing_System
 
             // Enter code here to show all riders who started there ride from the selected station
 
-            // lvRiders.ItemsSource = YourReturnedResults;
+            //Sets the listview's item source to be the list that contains riders from the specified station
+            lvFilteredRiders.ItemsSource = Riders.ReturnRidersAtStation(searchStation);
+
         } // OnSearchStation
 
         private void OnShowActive(object sender, RoutedEventArgs e)
         {
             // Enter code here to display all riders currently riding the underground
 
-            // lvRiders.ItemsSource = YourReturnedResults;
+            //Sets the listview's item source to be the list that contains active riders
+            lvFilteredRiders.ItemsSource = Riders.ReturnAllActiveRiders();
+
         } // OnShowActive
 
         private void OnClearList(object sender, RoutedEventArgs e)
         {
-            lvFilteredRiders.Items.Clear();
+            //lvFilteredRiders.Items.Clear(); //Resulted in an Invalid Operation Exception
+            lvFilteredRiders.ItemsSource = null;
         }
 
         private void InitializeRiders()
         {
             // 2. And here
             // Ex Riders = new YourList<Rider>();
-            Riders = new WillsList<Rider>();
+            Riders = new DanielsList<Rider>();
             Random rnd = new Random();
             HashSet<int> usedNumbers = new HashSet<int>();
 
@@ -82,7 +90,6 @@ namespace Assignment_London_Underground_Ticketing_System
 
         } // Initialize Riders
 
-    
 
     } //class
 
